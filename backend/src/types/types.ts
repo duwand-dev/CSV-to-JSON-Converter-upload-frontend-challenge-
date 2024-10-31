@@ -1,4 +1,3 @@
-
 // Types and Interfaces
 export interface MRFData {
   version: string;

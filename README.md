@@ -1,112 +1,133 @@
-# Coding Challenge: MRF Generation from Claims File OON Rates
+# MRF Generation from Claims File OON Rates
 
-## Introduction
+## Overview
 
-As part of the Transparency in Coverage (TiC) regulations, health insurers are required to publish their allowed amounts monthly in a machine-readable format. This challenge involves building a React application that facilitates the generation of these Machine-Readable Files (MRFs) from a CSV file containing claims data.
+This project is a React application designed to facilitate the generation of Machine-Readable Files (MRFs) from a CSV file containing claims data, in compliance with the Transparency in Coverage (TiC) regulations. The application allows users to upload, parse, validate, and approve claims data, which is then sent to a backend API to generate JSON MRF files.
 
-You will create an interface that allows users to upload, parse, validate, and approve claims data. The approved data will then be sent to a backend API to generate JSON MRF files, which will be stored on the server on disk.
+## Features
 
-## ⚠️ Important Note for Candidates
+- User-friendly interface for uploading claims data.
+- CSV file parsing and validation using Papaparse and Zod.
+- Approval workflow for claims data.
+- Integration with a backend API for MRF generation.
+- Fetch and display a list of generated MRF files.
+- Public page displaying MRF files.
+- Secure access to the claims upload page (optional).
 
-This coding challenge is designed to identify exceptional talent and is not intended for everyone. We are looking for candidates who can demonstrate outstanding problem-solving skills, efficient coding practices, and a deep understanding of modern web dev concepts.
+## Technologies Used
 
-**Time Constraint:** While we understand that creating a full-featured application takes time, we expect top candidates to be able to complete a significant portion of this challenge within a couple of hours. Your ability to prioritize features, make smart design decisions, and produce high-quality code quickly is key.
+- **Frontend**: React, Mantine, Tailwind CSS, MobX, AG Grid, React Router, Papaparse, Zod.
+- **Backend**: Node.js (assumed for API), Express (assumed for API).
 
-**Focus on Core Functionality:** If you find yourself running out of time, focus on implementing the core features and demonstrating your coding prowess rather than trying to complete every aspect of the challenge. We value quality over quantity.
+## Project Structure
 
-**Showcase Your Skills:** Use this opportunity to highlight your strengths. If you excel in certain areas (e.g., state management, API design, UI/UX), make sure to emphasize those in your implementation.
+```bash
+/src
+  /components       # Reusable UI components
+  /pages            # Page-level components
+  /stores           # MobX state management
+  /services         # API calls and backend interaction
+  /utils            # Utility functions
+```
 
-Remember, this challenge is as much about how you approach problem-solving and manage your time as it is about the final product. Good luck!
+## Getting Started
 
-## 🎯 Objectives
+1. **Clone the repository**:
 
-- **Build a user-friendly interface** for uploading and managing claims data.
-- **Parse and validate** the uploaded CSV claims file.
-- **Present the data** to users for approval before processing.
-- **Interact with a simple backend API** to generate and store JSON MRF files.
-- **Fetch and display** the list of MRF files for each customer.
-- **Expose a public page** displaying MRF files.
-- **Document the application design** and functionality.
+   ```bash
+   git clone git@github.com:duwand-dev/CSV-to-JSON-Converter-upload-frontend-challenge-.git
+   cd mrf-generation
+   ```
+2. **Install dependencies**:
 
-## 📝 Submission Guidelines
+   ```bash
+   npm install
+   ```
+3. **Run the application**:
 
-- **Provide a forked repository link** containing your project. Make sure it is public or add @mihilmy as a collaborator.
-- Include a **`README.md`** file with clear instructions on how to set up and run your application locally.
-- Ensure all dependencies are listed, and any setup scripts or configuration files are included.
-- Your code should be **well-organized** and **easy to navigate**.
-- Please look into the [RUBRIC.md](./RUBRIC.md) for our evaluation criteria
+   ```bash
+   npm start
+   ```
+4. **Open your browser and navigate to http://localhost:5137(frontend),  http://localhost:8080(backend) to access the application.**
 
-## 🛠️ Tools and Libraries to Use
+## Application Workflow
+1. **Upload CSV:** Users can upload a claims CSV file using the upload interface.
+2. **Parsing & Validation:** The application uses Papaparse to parse the CSV file and Zod for validation against a defined schema.
+3. **Approval of Claims:** Users can review the parsed claims data in a table format, approve or edit claims, and remove any unnecessary claims.
+4. **MRF Generation:** Upon approval, the data is sent to the backend API to generate and store MRF files.
+5. **Display MRF Files:** Users can view the list of generated MRF files on a public page.
 
-- **UI Components**: [Mantine](https://mantine.dev/) (do **NOT** design components from scratch).
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (use Tailwind classes for styling).
-- **State Management**: [MobX](https://mobx.js.org/README.html) (use one file for all state management).
-- **CSV Parsing**: [Papaparse](https://www.papaparse.com/) for parsing CSV files.
-- **Data Tables**: [AG Grid](https://www.ag-grid.com/) for displaying data in tables.
-- **Routing**: [React Router](https://reactrouter.com/) for handling routes.
-- **Schema Validation**: [Zod](https://zod.dev/) for validating claims data.
-- **API Interaction**: Use `fetch` or any other library for API calls.
-- **Storage**: Store generated MRF files on the server in a local folder.
+## Design Documentation
 
-## 📋 Instructions
+### Components and Responsibilities
 
-### 1. TiC Compliance for Allowed Amounts Publication
+#### Frontend Components
 
-- Understand that under the TiC regulations, health insurers must publish their allowed amounts monthly in a machine-readable JSON format. The format is publicly documented [here](https://github.com/CMSgov/price-transparency-guide/tree/master/schemas/allowed-amounts).
-- This application will aid in generating these JSON MRF files from a CSV file containing claims data.
+1. **CSV Upload Component**
+   - Allows users to upload a CSV file.
+   - Displays the file name and handles error messages for incorrect formats.
 
-### 2. Build an Interface for CSV Upload
+2. **Claims Data Table Component**
+   - Displays parsed and validated claims data using AG Grid.
+   - Supports approval, editing, and removal of claims.
 
-- **Create a user interface** that allows users to upload a CSV file of claims.
-- **Use Mantine components** for building the interface (do not design components from scratch).
-- The interface should include:
-  - A file upload button.
-  - Display of the selected file name.
-  - Error handling for incorrect file formats.
-  - A table of all the claims that the user will approve.
+3. **Approval Workflow Component**
+   - Manages the process of approving claims data before submission.
+   - Displays validation errors and allows users to review changes.
 
-### 3. Parse, Validate, and Present Claims Data
+4. **MRF File List Component**
+   - Fetches and displays a list of generated MRF files from the backend.
 
-- **Use Papaparse** to parse the input CSV file on the frontend. A sample has been included under `data/sample.csv`
-- **Validate the claims data** against a defined schema (you need to define a high-quality schema for the claims data).
-- **Handle parsing and validation errors** gracefully by informing the user of any issues.
-- **Present the parsed and validated data** to the user using AG Grid in a tabular format.
-- Allow the user to **approve** claims before submission.
-- BONUS: Allow the user to **edit** or **remove** claims as well.
-- BONUS: Secure this page with a dummy authentication system. Only authenticated users can access this page.
+5. **Public MRF Display Page**
+   - A public page that displays the MRF files for user access.
 
-### 4. Interact with Backend API for JSON MRF Generation
+#### State Management
 
-- **Define a high-quality schema** for the data to be sent to the backend API.
-- **Implement a function** to send the approved claims data to the backend API.
-- The backend API will **convert the data into JSON MRF files** and store them on the server in a local folder.
-- The format is publicly documented [here](https://github.com/CMSgov/price-transparency-guide/tree/master/schemas/allowed-amounts). You will simply run averages on each provider, procedure, place of service, billing class combination to generate the file.
-- This is the bulk of the project, I expect you to use good design patterns from here: https://refactoring.guru/design-patterns/catalog to manage the generation of the final file.
-- If there are missing required fields such as TIN. You can ignore them.
+- **MobX Store**
+  - Centralizes application state management, handling claims data, loading states, and validation errors.
+  - Allows for easy updates and reactivity across components.
 
-### 5. Fetch and Display List of MRF Files
+#### Utility Functions
 
-- **Create an API endpoint** that fetches the list of generated MRF files for each customer.
-- **Display the list** on a page similar to [this example](https://mrf.mano.claims/EdisonHealth).
-- **Create a public page** that displays the list of MRF files fetched from the API.
+- **CSV Parsing**
+  - Utilizes Papaparse to parse the CSV file and transform it into a JavaScript object.
+  
+- **Validation**
+  - Uses Zod to define and enforce a schema for claims data validation.
 
-### 6. Application Design Documentation
+#### API Interaction
 
-- **Create a markdown file (`DESIGN.md`)** that explains the entire application architecture and functionality.
-- Include details about:
-  - Overall application flow.
-  - Components and their responsibilities.
-  - State management using MobX.
-  - Interaction with the backend API.
-  - Routing and navigation.
+1. **Generate MRF API Endpoint**
+   - Endpoint: `POST /api/generate-mrf`
+   - Accepts approved claims data and returns the status of MRF generation.
 
-### 7. Code Organization and Best Practices
+2. **Fetch MRF Files API Endpoint**
+   - Endpoint: `GET /api/mrf-files`
+   - Returns a list of generated MRF files stored on the server.
 
-- Organize your code into appropriate folders:
-  - `components/` for reusable components.
-  - `pages/` for page-level components.
-  - `stores/` for MobX state management (use one file for all state management).
-  - `services/` for API calls and backend interaction.
-  - `utils/` for utility functions.
-- **Maintain high code quality** with proper spacing, comments, and meaningful naming conventions.
+### Routing and Navigation
+
+- Utilizes React Router for navigation between components and pages, ensuring a smooth user experience.
+- Main routes include:
+  - `/upload` - for CSV upload and approval.
+  - `/mrf-files` - for viewing the list of generated MRF files.
+  - `/public` - for public access to MRF files.
+
+### Data Flow
+
+1. **CSV Upload**: Users upload a CSV file, which is parsed and validated.
+2. **Validation**: Claims data is validated against a predefined schema, and any errors are displayed.
+3. **Approval**: Users approve claims before submission.
+4. **API Call**: Approved data is sent to the backend API for MRF generation.
+5. **MRF Generation**: Backend processes the data and generates MRF files.
+6. **Display MRF Files**: Users can view and download MRF files from the list.
+
+### Conclusion
+
+This document provides a comprehensive overview of the MRF Generation application design, detailing the architecture, components, state management, and data flow. It serves as a guide for understanding the application's structure and functionality for future development and enhancements.
+
+## API Endpoints
+**Generate MRF:** POST request to /api/generate-mrf with approved claims data.
+
+**Fetch MRF Files:** GET request to /api/mrf-files to retrieve the list of generated MRF files.
 

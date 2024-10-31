@@ -16,7 +16,7 @@ interface GridData {
   [key: string]: any;
 }
 
-export default function ClaimsUpload() {
+export default function UploadPage() {
   const [gridData, setGridData] = useState<GridData[]>([]);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([]);
   const navigate = useNavigate();

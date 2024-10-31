@@ -22,7 +22,9 @@ app.use('/mrf_files/*', serveStatic({ root: './' }))
 
 useRouter(app);
 
+const PORT = Number(process.env.PORT) || 8080;
+
 serve({
   fetch: app.fetch,
-  port: 8080,
-}, () => console.log("Server started!!!"))
+  port: PORT,
+}, () => console.log(`Server running on port : ${PORT}`))

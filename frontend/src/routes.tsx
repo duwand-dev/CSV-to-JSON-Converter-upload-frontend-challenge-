@@ -15,7 +15,6 @@ const router = createBrowserRouter([
         element: <Navigate to={"/upload"} />,
       },
       {
-        index: true,
         path: "upload", // Move the signin route under the layout
         element: <Upload />,
       },

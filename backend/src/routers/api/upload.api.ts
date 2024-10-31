@@ -7,10 +7,9 @@ import type { APIResponse, MRFData, UploadResponse } from '../../types/types.js'
 const api = new Hono();
 
 const mrfDir: string = path.join(process.cwd(), 'mrf_files')
-const uploadDir: string = path.join(process.cwd(), 'uploads')
 
 // Ensure directories exist
-;[uploadDir, mrfDir].forEach((dir: string): void => {
+;[mrfDir].forEach((dir: string): void => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
