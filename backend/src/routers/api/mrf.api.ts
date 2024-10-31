@@ -1,20 +1,14 @@
 import { Hono } from 'hono'
-import { serveStatic } from '@hono/node-server/serve-static'
-import { serve } from '@hono/node-server'
 import fs from 'fs'
 import path from 'path'
-import Papa from 'papaparse'
-import type { APIResponse, MRFData, MRFFileInfo, UploadResponse } from '../../types/types.js';
+import type { APIResponse, MRFFileInfo } from '../../types/types.js';
 
 const api: Hono = new Hono()
 
 const mrfDir: string = path.join(process.cwd(), 'mrf_files')
 
-// Serve static files from the MRF directory
-api.use('/mrf/*', serveStatic({ root: './' }))
-
 // Get list of MRF files
-api.get('/mrf-files', async (c): Promise<APIResponse<MRFFileInfo[]>> => {
+api.get('/', async (c): Promise<APIResponse<MRFFileInfo[]>> => {
   try {
     const files: string[] = fs.readdirSync(mrfDir)
     const mrfFiles: MRFFileInfo[] = files

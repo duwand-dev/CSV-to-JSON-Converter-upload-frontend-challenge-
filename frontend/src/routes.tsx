@@ -1,8 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import BasicLayout from "./layout/BasicLayout";
 import NotFoundPage from "./pages/error/NotFound";
-import MainPage from "./pages/index";
 import Upload from "./pages/upload/UploadPage";
+import MrfListPage from "./pages/mrflist/MrfList";
 
 const router = createBrowserRouter([
   {
@@ -11,12 +11,17 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
-        index: true, // Use index to define the default child route
-        element: <MainPage />,
+        path: "/", // Use index to define the default child route
+        element: <Navigate to={"/upload"} />,
       },
       {
+        index: true,
         path: "upload", // Move the signin route under the layout
         element: <Upload />,
+      },
+      {
+        path: "rmffiles", // Move the signin route under the layout
+        element: <MrfListPage />,
       }
     ],
   },

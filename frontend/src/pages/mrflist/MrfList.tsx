@@ -1,16 +1,18 @@
-// MRFFilesList.tsx
 import { useEffect, useState, useMemo } from 'react';
 import {
   Paper,
   Title,
   Text,
   Notification,
-  LoadingOverlay
+  LoadingOverlay,
+  Button
 } from '@mantine/core';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef } from 'ag-grid-community';
 import axios from 'axios';
 import { format } from 'date-fns';
+import { useNavigate } from "react-router-dom";
+import { serverURL } from '~/config';
 
 interface MRFFile {
   name: string;
@@ -19,10 +21,11 @@ interface MRFFile {
   modified: string;
 }
 
-export default function MRFFilesList() {
+const MrfListPage = () => {
   const [files, setFiles] = useState<MRFFile[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const columnDefs: ColDef[] = useMemo(() => [
     {
@@ -32,11 +35,13 @@ export default function MRFFilesList() {
       filter: true,
       flex: 2,
       cellRenderer: (params: any) => (
-        <div className="flex items-center">
-          <span className="text-blue-600 hover:text-blue-800 cursor-pointer">
-            {params.value}
-          </span>
-        </div>
+        <a href={`${serverURL}/mrf_files/${params.value}`} target='_blank' download >
+          <div className="flex items-center">
+            <span className="text-blue-600 hover:text-blue-800 cursor-pointer">
+              {params.value.slice(params.value.lastIndexOf('@') + 1, params.value.lastIndexOf('.'))}
+            </span>
+          </div>
+        </a >
       )
     },
     {
@@ -105,7 +110,7 @@ export default function MRFFilesList() {
             rowData={files}
             columnDefs={columnDefs}
             pagination={true}
-            paginationPageSize={10}
+            paginationPageSize={20}
             animateRows={true}
             defaultColDef={{
               flex: 1,
@@ -114,7 +119,10 @@ export default function MRFFilesList() {
             }}
           />
         </div>
+        <Button onClick={() => navigate('/upload')}>Upload files</Button>
       </Paper>
     </div>
   );
 }
+
+export default MrfListPage;

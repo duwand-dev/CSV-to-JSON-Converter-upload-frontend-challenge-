@@ -5,7 +5,7 @@ import MrfApi from "./api/mrf.api.js"
 
 const useRouter = (app: Hono) => {
   app.route("/upload", UploadApi);
-  app.route("/mrf", MrfApi);
+  app.route("/mrf-files", MrfApi);
 }
 
 export default useRouter

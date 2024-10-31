@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
 import { cors } from 'hono/cors'
+import { serveStatic } from '@hono/node-server/serve-static'
 
 import useRouter from './routers/index.js'
 
@@ -16,6 +17,8 @@ app.onError((err: Error, c) => {
 })
 
 app.use('/*', cors())
+
+app.use('/mrf_files/*', serveStatic({ root: './' }))
 
 useRouter(app);
 

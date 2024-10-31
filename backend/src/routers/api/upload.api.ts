@@ -51,9 +51,7 @@ api.post('/', async (c): Promise<APIResponse<UploadResponse>> => {
     const buffer: Buffer = await streamToBuffer(file.stream())
     const content: string = buffer.toString()
 
-    console.log(content)
     // Parse the content (assuming it's valid JSON or CSV)
-
     let data: string = JSON.stringify(Papa.parse(content).data);
 
     // Create MRF file
@@ -64,7 +62,7 @@ api.post('/', async (c): Promise<APIResponse<UploadResponse>> => {
     }
 
     // Generate unique filename
-    const filename: string = `mrf_#${Date.now()}#${file.name.slice(0, -4)}.json`
+    const filename: string = `mrf_${Date.now()}@${file.name.slice(0, -4)}.json`
     const mrfPath: string = path.join(mrfDir, filename)
 
     // Save MRF file

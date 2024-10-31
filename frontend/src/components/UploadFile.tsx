@@ -17,6 +17,7 @@ import { Dropzone, FileRejection } from "@mantine/dropzone";
 import axios from "axios";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import { serverURL } from "~/config";
 
 interface UploadResponse {
   success: boolean;
@@ -44,7 +45,7 @@ const UploadFile: FC<UploadFileProps> = ({ setFile }) => {
 
     try {
       await axios.post<UploadResponse>(
-        "http://localhost:8080/upload",
+        `${serverURL}/upload`,
         formData,
         {
           headers: {

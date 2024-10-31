@@ -1,43 +1,25 @@
-// ClaimsUpload.tsx
-import { useState, useCallback, useMemo } from "react";
+import { useState, useMemo } from "react";
 import {
+  Button,
   Paper,
-  Text,
-  Group,
-  Notification,
   Title,
-  Progress,
-  ActionIcon,
-  LoadingOverlay,
 } from "@mantine/core";
-import {
-  IconUpload,
-  IconX,
-  IconCheck,
-  IconFileSpreadsheet,
-} from "@tabler/icons-react";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from "ag-grid-community";
-import { Dropzone, FileRejection } from "@mantine/dropzone";
 import Papa from 'papaparse';
-import axios from "axios";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import UploadFile from "~/components/UploadFile";
+import { useNavigate } from "react-router-dom";
 
 interface GridData {
   [key: string]: any;
 }
 
-interface UploadResponse {
-  success: boolean;
-  filename: string;
-}
-
 export default function ClaimsUpload() {
   const [gridData, setGridData] = useState<GridData[]>([]);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const processCSVFile = (file: File) => {
     Papa.parse(file, {
@@ -143,6 +125,7 @@ export default function ClaimsUpload() {
             </div>
           </div>
         )}
+        <Button onClick={() => navigate('/rmffiles')}>Show files</Button>
       </Paper>
     </div>
   );
